@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "VJ3D.sln"
+    "dotnet.defaultSolution": "VJ3D-FIB-2025.sln"
 }

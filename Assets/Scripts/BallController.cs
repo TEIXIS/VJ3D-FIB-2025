@@ -75,38 +75,39 @@ public class BallController : MonoBehaviour
             rb.linearVelocity   = dir * speed;
             return;
         }
-
-        // Y el resto de colisiones, usando Reflect / tu propia lógica...
-        ContactPoint cp   = col.GetContact(0);
-        Vector3 incoming  = rb.linearVelocity;
-        Vector3 normal    = cp.normal.normalized;
-        if (Vector3.Dot(incoming, normal) < 0f)
+        else if (col.gameObject.CompareTag("cub"))
         {
-            Vector3 refl = Vector3.Reflect(incoming, normal);
-            refl.y = 0;
-            rb.linearVelocity = refl.normalized * speed;
+            ContactPoint cp   = col.GetContact(0);
+            Vector3 incoming  = rb.linearVelocity;
+            Vector3 normal    = cp.normal.normalized;
+            if (Vector3.Dot(incoming, normal) < 0f)
+            {
+                Vector3 refl = Vector3.Reflect(incoming, normal);
+                refl.y = 0;
+                rb.linearVelocity = refl.normalized * speed;
+            }
+            //rb.linearVelocity = new Vector3(10, 0, 0);
+            // 3. Ahora destruir el objeto
+            Destroy(col.gameObject.gameObject);
+
+            Debug.Log("¡Colisión con un Cub detectada! Destruyendo...");
         }
+        else {
+            // Y el resto de colisiones, usando Reflect / tu propia lógica...
+            ContactPoint cp   = col.GetContact(0);
+            Vector3 incoming  = rb.linearVelocity;
+            Vector3 normal    = cp.normal.normalized;
+            if (Vector3.Dot(incoming, normal) < 0f)
+            {
+                Vector3 refl = Vector3.Reflect(incoming, normal);
+                refl.y = 0;
+                rb.linearVelocity = refl.normalized * speed;
+            }
+        }
+        
     }
 
-    void OnTriggerEnter(Collider other)
-{
-    if (other.CompareTag("cub"))
-    {
-        // 1. Obtener la normal aproximada del punto de contacto
-        Vector3 normal = (transform.position - other.transform.position).normalized;
-
-        // 2. Reflejar la dirección de movimiento
-        Vector3 incoming = rb.linearVelocity;
-        Vector3 refl = Vector3.Reflect(incoming, normal);
-        refl.y = 0; // Si estás usando el plano XZ
-        rb.linearVelocity = refl.normalized * speed;
-
-        // 3. Ahora destruir el objeto
-        Destroy(other.gameObject);
-
-        Debug.Log("¡Colisión con un Cub detectada! Destruyendo...");
-    }
-}
+    
 
 
 }
