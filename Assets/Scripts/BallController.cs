@@ -5,6 +5,7 @@ public class BallController : MonoBehaviour
 {
     [Tooltip("Velocidad constante de la bola")]
     public float speed = 10f;
+    private bool powerBallActive = false;
 
     private Rigidbody rb;
     private bool launched = false;
@@ -38,6 +39,12 @@ public class BallController : MonoBehaviour
             Vector3 dir = new Vector3(1, 0, -1).normalized;
             rb.linearVelocity = dir * speed;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            powerBallActive = !powerBallActive;
+            Debug.Log("Power Ball " + (powerBallActive ? "activado" : "desactivado"));
+        }
+
     }
 
     void FixedUpdate()
@@ -80,18 +87,27 @@ public class BallController : MonoBehaviour
             ContactPoint cp   = col.GetContact(0);
             Vector3 incoming  = rb.linearVelocity;
             Vector3 normal    = cp.normal.normalized;
-            if (Vector3.Dot(incoming, normal) < 0f)
+
+            Destroy(col.gameObject); // Siempre destruye el bloque
+
+            if (!powerBallActive)
             {
-                Vector3 refl = Vector3.Reflect(incoming, normal);
-                refl.y = 0;
-                rb.linearVelocity = refl.normalized * speed;
+                if (Vector3.Dot(incoming, normal) < 0f)
+                {
+                    Vector3 refl = Vector3.Reflect(incoming, normal);
+                    refl.y = 0;
+                    rb.linearVelocity = refl.normalized * speed;
+                }
             }
-            //rb.linearVelocity = new Vector3(10, 0, 0);
-            // 3. Ahora destruir el objeto
-            Destroy(col.gameObject.gameObject);
+            else
+            {
+                // Mantén velocidad y dirección (no rebota)
+                rb.linearVelocity = incoming.normalized * speed;
+            }
 
             Debug.Log("¡Colisión con un Cub detectada! Destruyendo...");
         }
+
         else {
             // Y el resto de colisiones, usando Reflect / tu propia lógica...
             ContactPoint cp   = col.GetContact(0);
