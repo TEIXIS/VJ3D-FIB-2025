@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour
     [Tooltip("Velocidad constante de la bola")]
     public float speed = 10f;
     private bool powerBallActive = false;
+    public GameObject ballPrefab;
 
     private Rigidbody rb;
     private bool launched = false;
@@ -16,15 +17,15 @@ public class BallController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         // Sin gravedad, sin drag
-        rb.useGravity             = false;
-        rb.linearDamping                   = 0f;
-        rb.angularDamping            = 0f;
+        rb.useGravity = false;
+        rb.linearDamping = 0f;
+        rb.angularDamping = 0f;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation          = RigidbodyInterpolation.Interpolate;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         // Congelamos SOLO Z, permitiendo rotar
         rb.constraints = RigidbodyConstraints.FreezePositionY;
-        
+
         // Calculamos radio (suponiendo escala uniforme):
         radius = transform.localScale.x * 0.5f;
     }
@@ -44,6 +45,11 @@ public class BallController : MonoBehaviour
             powerBallActive = !powerBallActive;
             Debug.Log("Power Ball " + (powerBallActive ? "activado" : "desactivado"));
         }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SpawnExtraBalls(2);
+        }
+
 
     }
 
@@ -61,11 +67,11 @@ public class BallController : MonoBehaviour
         if (v.sqrMagnitude > 0.001f)
         {
             // eje de rotación = n × v̂, con n = (0,0,1)
-            Vector3 axis    = Vector3.Cross(Vector3.forward, v.normalized);
-            float   omega   = v.magnitude / radius;   // rad/s
+            Vector3 axis = Vector3.Cross(Vector3.forward, v.normalized);
+            float omega = v.magnitude / radius;   // rad/s
 
             // Asigna rotación
-            rb.angularVelocity = axis * omega/5;
+            rb.angularVelocity = axis * omega / 5;
         }
     }
 
@@ -75,18 +81,18 @@ public class BallController : MonoBehaviour
         // Por ejemplo, el rebote en paddle que ya implementaste:
         if (col.gameObject.CompareTag("Paddle"))
         {
-            float hitX    = transform.position.x - col.transform.position.x;
-            float halfW   = col.collider.bounds.size.x / 2f;
-            float nx      = Mathf.Clamp(hitX / halfW, -1f, 1f);
-            Vector3 dir   = new Vector3(nx, 0f, -1f).normalized;
-            rb.linearVelocity   = dir * speed;
+            float hitX = transform.position.x - col.transform.position.x;
+            float halfW = col.collider.bounds.size.x / 2f;
+            float nx = Mathf.Clamp(hitX / halfW, -1f, 1f);
+            Vector3 dir = new Vector3(nx, 0f, -1f).normalized;
+            rb.linearVelocity = dir * speed;
             return;
         }
         else if (col.gameObject.CompareTag("cub"))
         {
-            ContactPoint cp   = col.GetContact(0);
-            Vector3 incoming  = rb.linearVelocity;
-            Vector3 normal    = cp.normal.normalized;
+            ContactPoint cp = col.GetContact(0);
+            Vector3 incoming = rb.linearVelocity;
+            Vector3 normal = cp.normal.normalized;
 
             Destroy(col.gameObject); // Siempre destruye el bloque
 
@@ -108,11 +114,12 @@ public class BallController : MonoBehaviour
             Debug.Log("¡Colisión con un Cub detectada! Destruyendo...");
         }
 
-        else {
+        else
+        {
             // Y el resto de colisiones, usando Reflect / tu propia lógica...
-            ContactPoint cp   = col.GetContact(0);
-            Vector3 incoming  = rb.linearVelocity;
-            Vector3 normal    = cp.normal.normalized;
+            ContactPoint cp = col.GetContact(0);
+            Vector3 incoming = rb.linearVelocity;
+            Vector3 normal = cp.normal.normalized;
             if (Vector3.Dot(incoming, normal) < 0f)
             {
                 Vector3 refl = Vector3.Reflect(incoming, normal);
@@ -120,8 +127,31 @@ public class BallController : MonoBehaviour
                 rb.linearVelocity = refl.normalized * speed;
             }
         }
-        
+
     }
+
+    void SpawnExtraBalls(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0f, Random.Range(-0.5f, 0.5f));
+            GameObject newBall = Instantiate(ballPrefab, transform.position + offset, Quaternion.identity);
+
+            BallController ballScript = newBall.GetComponent<BallController>();
+            ballScript.LaunchInRandomDirection();
+        }
+    }
+    public void LaunchInRandomDirection()
+    {
+        if (launched) return;
+
+        launched = true;
+        rb.isKinematic = false;
+        Vector3 dir = new Vector3(Random.Range(-1f, 1f), 0f, -1f).normalized;
+        rb.linearVelocity = dir * speed;
+    }
+
+
 
     
 
