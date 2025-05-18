@@ -12,6 +12,11 @@ public class BallController : MonoBehaviour
     private bool launched = false;
     private float radius;
 
+    private GameObject paddle;
+    private Vector3 lastPaddlePos;
+    private bool paddleControlActive = false;
+
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,6 +33,10 @@ public class BallController : MonoBehaviour
 
         // Calculamos radio (suponiendo escala uniforme):
         radius = transform.localScale.x * 0.5f;
+
+        paddle = GameObject.FindWithTag("Paddle");
+        lastPaddlePos = paddle.transform.position;
+
     }
 
     void Update()
@@ -49,7 +58,11 @@ public class BallController : MonoBehaviour
         {
             SpawnExtraBalls(2);
         }
-
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            paddleControlActive = !paddleControlActive;
+            Debug.Log("Control de paleta " + (paddleControlActive ? "activado" : "desactivado"));
+        }
 
     }
 
@@ -73,6 +86,19 @@ public class BallController : MonoBehaviour
             // Asigna rotación
             rb.angularVelocity = axis * omega / 5;
         }
+        if (paddleControlActive && paddle != null)
+        {
+            Vector3 paddleDelta = paddle.transform.position - lastPaddlePos;
+
+            // Solo queremos el cambio en X (horizontal)
+            float influence = paddleDelta.x * 10f; // Puedes ajustar el "10f" según lo fuerte que quieres el efecto
+            Vector3 vec = rb.linearVelocity;
+            vec.x += influence;
+            rb.linearVelocity = vec.normalized * speed;
+
+            lastPaddlePos = paddle.transform.position;
+        }
+
     }
 
     void OnCollisionEnter(Collision col)

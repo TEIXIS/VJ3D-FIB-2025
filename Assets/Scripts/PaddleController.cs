@@ -4,6 +4,7 @@ public class PaddleController : MonoBehaviour
 {
     public float speed = 10f;
     public float limitX = 5f;
+    
 
     void Update()
     {
