@@ -1522,6 +1522,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: magnetPrefab
+      value: 
+      objectReference: {fileID: 6771291604981512680, guid: 38ff1ae31aae49e42b88ba9b9148be15, type: 3}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: minZComponent
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: extraBallPrefab
+      value: 
+      objectReference: {fileID: 4175535797371517778, guid: c98955a36e1d0974c8b3260cad16070f, type: 3}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: powerBallPrefab
+      value: 
+      objectReference: {fileID: 3916709891233768720, guid: 0586f4e387fc69844b31b52952c3771c, type: 3}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: normalBallPrefab
+      value: 
+      objectReference: {fileID: 6678450680962926886, guid: f7b25ada06124f64daad0d81787a1453, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
