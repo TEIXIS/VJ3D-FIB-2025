@@ -84,18 +84,16 @@ public class BallController : MonoBehaviour
         {
             LaunchInInitialDirection();
         }
-
-        // Otros toggles de power-ups
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             powerBallActive = !powerBallActive;
             Debug.Log("Power Ball " + (powerBallActive ? "activado" : "desactivado"));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             SpawnExtraBalls(2);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             paddleControlActive = !paddleControlActive;
             Debug.Log("Control de paleta " + (paddleControlActive ? "activado" : "desactivado"));
