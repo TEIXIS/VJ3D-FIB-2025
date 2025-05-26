@@ -8,6 +8,9 @@ TagManager:
   - Wall
   - Paddle
   - cub
+  - PowerUpMagnet
+  - PowerUpExtraBall
+  - PowerUpPowerBall
   layers:
   - Default
   - TransparentFX
