@@ -165,6 +165,8 @@ public class BallController : MonoBehaviour
             Vector3 spawnPos = col.transform.position;
             Destroy(col.gameObject);
 
+            Object.FindAnyObjectByType<ScoreManager>()?.AddPoints(100);
+
             // Probabilidad de soltar imán (ej. 30%)
             if (magnetPrefab != null && Random.value < 0.3f)
             {
@@ -186,7 +188,8 @@ public class BallController : MonoBehaviour
                 Instantiate(normalBallPrefab, spawnPos, Quaternion.identity);
             }
 
-             Vector3 refl;
+            Vector3 refl;
+
             if (!powerBallActive && Vector3.Dot(incoming, normal) < 0f)
             {
                 refl = Vector3.Reflect(incoming, normal);

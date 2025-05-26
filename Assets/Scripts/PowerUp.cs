@@ -35,7 +35,7 @@ public class PowerUp : MonoBehaviour
             return;
 
         // Encuentra la bola y aplica el efecto según el tipo
-        BallController ball = FindObjectOfType<BallController>();
+        BallController ball = Object.FindAnyObjectByType<BallController>();
         if (ball != null)
         {
             switch (type)
