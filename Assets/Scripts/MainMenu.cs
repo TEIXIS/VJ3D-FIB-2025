@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 
     public void ShowCredits()
     {
-        SceneManager.LoadScene("Creditos");
+        SceneManager.LoadScene("credits");
     }
 
     public void QuitGame()
