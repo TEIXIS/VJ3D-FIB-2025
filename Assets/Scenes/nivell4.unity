@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  limitX: 4
+  limitX: 5
 --- !u!1 &1016779260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 629061030527274250, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.502
+      value: 10.2
       objectReference: {fileID: 0}
     - target: {fileID: 629061030527274250, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
       propertyPath: m_LocalPosition.z
