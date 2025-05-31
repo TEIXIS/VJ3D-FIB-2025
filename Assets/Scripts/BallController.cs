@@ -28,9 +28,15 @@ public class BallController : MonoBehaviour
     private bool magnetQueued = false;    // se activará en el siguiente rebote en paleta
     private bool magnetActive = false;    // bola pegada a la paleta
     private Vector3 stickOffset;
-     public float minZComponent = 0.2f;
+    public float minZComponent = 0.2f;
 
-        private Vector3 ClampDirection(Vector3 dir)
+    public AudioClip breakSound;
+    public AudioClip bounceSound;
+
+    private AudioSource audioSource;
+
+
+    private Vector3 ClampDirection(Vector3 dir)
     {
         dir.y = 0;
         dir.Normalize();
@@ -63,6 +69,8 @@ public class BallController : MonoBehaviour
 
         paddle = GameObject.FindWithTag("Paddle");
         lastPaddlePos = paddle.transform.position;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -151,6 +159,9 @@ public class BallController : MonoBehaviour
             float nx = Mathf.Clamp(hitX / halfW, -1f, 1f);
             Vector3 dir = new Vector3(nx, 0f, -1f).normalized;
             rb.linearVelocity = dir * speed;
+            
+            AudioSource.PlayClipAtPoint(bounceSound, transform.position);
+
             return;
         }
 
@@ -202,6 +213,9 @@ public class BallController : MonoBehaviour
             // ajustamos la dirección para garantizar minZ
             Vector3 dirClamped = ClampDirection(refl);
             rb.linearVelocity = dirClamped * speed;
+
+            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+
             return;
         }
 

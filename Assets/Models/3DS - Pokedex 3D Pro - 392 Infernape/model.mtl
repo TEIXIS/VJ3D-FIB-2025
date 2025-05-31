@@ -1,0 +1,61 @@
+newmtl BodyA
+ illum 2
+ Ka 0.8 0.8 0.8
+ Kd 1 1 1
+ Ks 0.372549 0.3254902 0.3098039
+ Ns 20
+ d 1
+ Tr 0
+ map_Kd Goukazaru_bodyCl_ctr.png
+newmtl BodyB
+ illum 2
+ Ka 0.7882353 0.627451 0.1019608
+ Kd 0.9490196 0.9490196 0.9490196
+ Ks 1 1 0.3019608
+ Ns 20
+ d 1
+ Tr 0
+ map_Kd Goukazaru_bodyCl_ctr.png
+newmtl BodyC_line
+ illum 2
+ Ka 1 0.3803922 0.3803922
+ Kd 1 1 1
+ Ks 0 0 0
+ Ns 20
+ d 1
+ Tr 0
+ map_Kd Goukazaru_bodyCl_ctr.png
+newmtl BodyC_line_shadow
+ illum 2
+ Ka 0 0 0
+ Kd 0 0 0
+ Ks 0 0 0
+ Ns 20
+ d 1
+ Tr 0
+newmtl BodyC_powa
+ illum 2
+ Ka 1 0.9098039 0.2509804
+ Kd 1 1 1
+ Ks 0.4980392 0.4980392 0.4980392
+ Ns 20
+ d 1
+ Tr 0
+ map_Kd Goukazaru_bodyCl_ctr.png
+newmtl Eye
+ illum 2
+ Ka 0.8 0.8 0.8
+ Kd 1 1 1
+ Ks 0.372549 0.3254902 0.3098039
+ Ns 20
+ d 1
+ Tr 0
+ map_Kd Goukazaru_eyeCl_ctr.png
+newmtl shadow_w
+ illum 2
+ Ka 0 0 0
+ Kd 0 0 0
+ Ks 0 0 0
+ Ns 20
+ d 1
+ Tr 0
