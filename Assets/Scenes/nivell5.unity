@@ -723,7 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  limitX: 4
+  limitX: 5
 --- !u!1001 &1111159062
 PrefabInstance:
   m_ObjectHideFlags: 0
