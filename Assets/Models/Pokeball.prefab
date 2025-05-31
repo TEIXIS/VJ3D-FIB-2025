@@ -149,7 +149,24 @@ MonoBehaviour:
   extraBallPrefab: {fileID: 4175535797371517778, guid: c98955a36e1d0974c8b3260cad16070f, type: 3}
   powerBallPrefab: {fileID: 3916709891233768720, guid: 0586f4e387fc69844b31b52952c3771c, type: 3}
   normalBallPrefab: {fileID: 6678450680962926886, guid: f7b25ada06124f64daad0d81787a1453, type: 3}
+  telekinesisPrefab: {fileID: 360292800206022367, guid: 19c236ea899206141b65a3c64c985732, type: 3}
+  emberPrefab: {fileID: 2835508936536005606, guid: 9c1c39315dad1e148b0083898c558d15, type: 3}
   powerBallActive: 0
   minZComponent: 0.5
+  attractionActive: 0
+  attractionStrength: 0.1
+  projectilePrefab: {fileID: 3396058889055047377, guid: f2d8b07e12e379248a73f1011200ff09, type: 3}
+  charizardPrefab: {fileID: 460832903434345590, guid: a465ff2d746b7f9429885a4265d9a27d, type: 3}
+  projectileHeight: 10.502
+  shootInterval: 2
+  shootDuration: 6
+  charizardOffset: 0.3
+  charizardHeight: 0.5
+  slowpokePrefab: {fileID: 3983204781523533011, guid: 36b8cc77f4b96d142981987e1e1f2250, type: 3}
+  slowDuration: 8
+  slowFactor: 0.5
+  timburrPrefab: {fileID: 6814658653878517563, guid: 13f6ff1defc21984abebbc2240789964, type: 3}
+  conkeldurrPrefab: {fileID: 4258719821543853771, guid: 3f5ab5ceac5cc504b8bb088a6d3acf3f, type: 3}
   breakSound: {fileID: 8300000, guid: 68fbe8ec2b5acd447a8f9837b797190d, type: 3}
   bounceSound: {fileID: 8300000, guid: 4101db5d54e092f4f8faaf5b95a153a0, type: 3}
+
