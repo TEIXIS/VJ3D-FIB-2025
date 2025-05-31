@@ -151,3 +151,5 @@ MonoBehaviour:
   normalBallPrefab: {fileID: 6678450680962926886, guid: f7b25ada06124f64daad0d81787a1453, type: 3}
   powerBallActive: 0
   minZComponent: 0.5
+  breakSound: {fileID: 8300000, guid: 68fbe8ec2b5acd447a8f9837b797190d, type: 3}
+  bounceSound: {fileID: 8300000, guid: 4101db5d54e092f4f8faaf5b95a153a0, type: 3}

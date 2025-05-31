@@ -9637,7 +9637,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: d44c85b2bbf4da646a4202ac82b49606, type: 3}
   m_Resource: {fileID: 8300000, guid: d44c85b2bbf4da646a4202ac82b49606, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -11714,6 +11714,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: breakSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 68fbe8ec2b5acd447a8f9837b797190d, type: 3}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: bounceSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4101db5d54e092f4f8faaf5b95a153a0, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
