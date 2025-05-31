@@ -5,7 +5,12 @@ public enum PowerUpType
     Magnet,
     ExtraBall,
     PowerBall,
-    NormalBall
+    NormalBall,
+    Telekinesis,
+    Ember,
+    SlowTime,
+    Timburr,
+    Conkeldurr
     // En el futuro: MultiBall, SpeedBall, etc.
 }
 
@@ -53,6 +58,47 @@ public class PowerUp : MonoBehaviour
                     break;
                 case PowerUpType.NormalBall:
                     ball.powerBallActive = false;
+                    break;
+                case PowerUpType.Telekinesis:
+                    // Aquí podrías implementar la lógica de telequinesis si decides añadirla
+                    ball.ActivateAttraction(30f);
+                    Debug.Log("PowerUp: Telekinesis activado (lógica no implementada).");
+                    break;
+                case PowerUpType.Ember:
+                    // Aquí podrías implementar la lógica de Ember si decides añadirla
+                    ball.ActivateShooter();
+                    Debug.Log("PowerUp: Ember activado (lógica no implementada).");
+                    break;
+                case PowerUpType.SlowTime:
+                    // Aquí podrías implementar la lógica de SlowTime si decides añadirla
+                    Debug.Log("PowerUp: SlowTime activado (lógica no implementada).");
+                    ball.ActivateSlow();
+                    break;
+                case PowerUpType.Timburr:
+                    // Localiza el PaddleManager en el objeto con tag "Paddle"
+                    PaddleManager pmT = other.GetComponentInParent<PaddleManager>();
+                    if (pmT != null)
+                    {
+                        pmT.ActivateTimburrMode();
+                        Debug.Log("PowerUp: ¡Transformación a Timburr activada!");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("PaddleManager no encontrado al recoger TimberPowerUp.");
+                    }
+                    break;
+
+                case PowerUpType.Conkeldurr:
+                    PaddleManager pmC = other.GetComponentInParent<PaddleManager>();
+                    if (pmC != null)
+                    {
+                        pmC.ActivateConkeldurrMode();
+                        Debug.Log("PowerUp: ¡Transformación a Conkeldurr activada!");
+                    }
+                    else
+                    {
+                        Debug.LogWarning("PaddleManager no encontrado al recoger ConkeldurrPowerUp.");
+                    }
                     break;
                 // Añade más casos aquí cuando tengas más tipos
             }
