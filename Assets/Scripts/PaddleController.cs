@@ -26,7 +26,7 @@ public class PaddleController : MonoBehaviour
         }
 
         // Ahora movemos la paleta normalmente...
-        float h = Input.GetAxis("Horizontal") * -1f;
+
 
         string sceneName = SceneManager.GetActiveScene().name;
 

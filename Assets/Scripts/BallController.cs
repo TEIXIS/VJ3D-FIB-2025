@@ -75,6 +75,7 @@ public class BallController : MonoBehaviour
 
         if (Mathf.Abs(dir.z) < minZComponent)
         {
+            Debug.Log("ClampDirection: dir.z %f es menor que minZComponent %f, ajustando dirección" + dir.z + minZComponent);
             float signZ = dir.z >= 0 ? 1f : -1f;
             dir.z = minZComponent * signZ;
             // recalculamos x para que x² + z² = 1 (y=0)

@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7168049342032027853
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7131725808356366202}
+  - component: {fileID: 7056972357406748352}
+  - component: {fileID: 2157661018728260416}
+  m_Layer: 0
+  m_Name: PaddleOg
+  m_TagString: Paddle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7131725808356366202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168049342032027853}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10.5, z: -2.674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7056972357406748352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168049342032027853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0a3d1b77abe7544a0f5feacfbff22d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  limitX: 5
+--- !u!114 &2157661018728260416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168049342032027853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec27c6544442de9419280aa7e89adf23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPaddleGurdurr: {fileID: 3424685038315393243, guid: f35677640535ffa4387217e644e181b7, type: 3}
+  prefabPaddleTimburr: {fileID: 8405015932424529972, guid: 0114b667d9d29ee449d040904b2e33fa, type: 3}
+  prefabPaddleConkeldurr: {fileID: 723218449409387647, guid: 6b06a8cd60edc1744b3ff43bd36f0369, type: 3}
+  transformDuration: 30

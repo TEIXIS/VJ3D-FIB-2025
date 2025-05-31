@@ -152,7 +152,7 @@ MonoBehaviour:
   telekinesisPrefab: {fileID: 360292800206022367, guid: 19c236ea899206141b65a3c64c985732, type: 3}
   emberPrefab: {fileID: 2835508936536005606, guid: 9c1c39315dad1e148b0083898c558d15, type: 3}
   powerBallActive: 0
-  minZComponent: 0.5
+  minZComponent: 0.9
   attractionActive: 0
   attractionStrength: 0.1
   projectilePrefab: {fileID: 3396058889055047377, guid: f2d8b07e12e379248a73f1011200ff09, type: 3}
@@ -169,4 +169,3 @@ MonoBehaviour:
   conkeldurrPrefab: {fileID: 4258719821543853771, guid: 3f5ab5ceac5cc504b8bb088a6d3acf3f, type: 3}
   breakSound: {fileID: 8300000, guid: 68fbe8ec2b5acd447a8f9837b797190d, type: 3}
   bounceSound: {fileID: 8300000, guid: 4101db5d54e092f4f8faaf5b95a153a0, type: 3}
-
