@@ -65,6 +65,9 @@ public class BallController : MonoBehaviour
     public AudioClip breakSound;
     public AudioClip bounceSound;
 
+    public GameObject breakParticlesPrefab; 
+
+
     private AudioSource audioSource;
 
     // Ejemplo de pesos, ajústalos a tu gusto
@@ -264,6 +267,11 @@ public class BallController : MonoBehaviour
 
             Object.FindAnyObjectByType<ScoreManager>()?.AddPoints(100);
 
+            if (breakParticlesPrefab != null)
+            {
+                Instantiate(breakParticlesPrefab, col.transform.position, Quaternion.identity);
+                Debug.Log("Partículas de destrucción generadas");
+            }
 
             Vector3 spawnPos = col.transform.position;
             Destroy(col.gameObject);
