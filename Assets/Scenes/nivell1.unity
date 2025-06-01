@@ -667,6 +667,7 @@ GameObject:
   - component: {fileID: 1021081369}
   - component: {fileID: 1021081371}
   - component: {fileID: 1021081372}
+  - component: {fileID: 1021081373}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -728,6 +729,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1531126275}
   highScoreText: {fileID: 0}
+--- !u!114 &1021081373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021081368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378a2c9b66f48b14eb9e30ea2f0dab7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelPowerUpPrefab: {fileID: 2285589801973482630, guid: dd13d1a5afdae824db369a4134d008ca, type: 3}
+  threshold: 0.95
 --- !u!1001 &1021362654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2179,7 +2194,7 @@ PrefabInstance:
       objectReference: {fileID: 6771291604981512680, guid: 38ff1ae31aae49e42b88ba9b9148be15, type: 3}
     - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
       propertyPath: minZComponent
-      value: 0.2
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
       propertyPath: slowpokePrefab

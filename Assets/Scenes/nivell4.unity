@@ -5018,6 +5018,7 @@ GameObject:
   - component: {fileID: 1016779261}
   - component: {fileID: 1016779263}
   - component: {fileID: 1016779264}
+  - component: {fileID: 1016779265}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -5079,6 +5080,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1418196899}
   highScoreText: {fileID: 0}
+--- !u!114 &1016779265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016779260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378a2c9b66f48b14eb9e30ea2f0dab7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextLevelPowerUpPrefab: {fileID: 2285589801973482630, guid: dd13d1a5afdae824db369a4134d008ca, type: 3}
+  threshold: 0.95
 --- !u!1 &1056159847
 GameObject:
   m_ObjectHideFlags: 0

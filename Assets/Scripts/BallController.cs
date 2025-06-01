@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class BallController : MonoBehaviour
@@ -66,6 +67,8 @@ public class BallController : MonoBehaviour
 
     private AudioSource audioSource;
 
+    // Ejemplo de pesos, ajústalos a tu gusto
+    private Dictionary<GameObject, float> powerUpWeights;
 
 
     private Vector3 ClampDirection(Vector3 dir)
@@ -85,6 +88,23 @@ public class BallController : MonoBehaviour
 
         return dir;
     }
+
+    void Start()
+    {
+        // Inicializamos el diccionario de pesos una sola vez
+        powerUpWeights = new Dictionary<GameObject, float>()
+        {
+            { magnetPrefab,        10f },
+            { timburrPrefab,        7f },
+            { conkeldurrPrefab,     7f },
+            { slowpokePrefab,       8f },
+            { emberPrefab,          5f },
+            { extraBallPrefab,     12f },
+            { telekinesisPrefab,    4f },
+            { powerBallPrefab,      3f }
+        };
+    }
+
 
     void Awake()
     {
@@ -225,7 +245,7 @@ public class BallController : MonoBehaviour
             float nx = Mathf.Clamp(hitX / halfW, -1f, 1f);
             Vector3 dir = new Vector3(nx, 0f, -1f).normalized;
             rb.linearVelocity = dir * speed;
-            
+
             AudioSource.PlayClipAtPoint(bounceSound, transform.position);
 
             return;
@@ -239,57 +259,33 @@ public class BallController : MonoBehaviour
             Vector3 normal = cp.normal.normalized;
 
             // Guardamos posición antes de destruir
-            Vector3 spawnPos = col.transform.position;
-            Destroy(col.gameObject);
+
 
             Object.FindAnyObjectByType<ScoreManager>()?.AddPoints(100);
 
+
+            Vector3 spawnPos = col.transform.position;
+            Destroy(col.gameObject);
+
+            // 1) Notificamos al LevelManager y guardamos si generó el next-level:
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            bool spawnedNext = false;
+            if (lm != null)
+            {
+                spawnedNext = lm.BlockDestroyed(spawnPos);
+            }
+            else
+            {
+                Debug.LogWarning("BallController: no se encontró LevelManager.");
+            }
+
+            // 2) Solo si NO se generó el next-level, hacemos el spawn aleatorio de power-ups normales:
+            if (!spawnedNext)
+            {
+                if(Random.value < 0.2) GenerarPowerUpPonderado(spawnPos);
+            }
             // Probabilidad de soltar imán (ej. 30%)
-            if (magnetPrefab != null && Random.value < 0.1f)
-            {
-                Quaternion rot = Quaternion.Euler(-90f, 0f, 0f);
-                Instantiate(magnetPrefab, spawnPos, rot);
-                Debug.Log("Power-Up Imán generado en " + spawnPos);
-            }
-            else if(timburrPrefab != null && Random.value < 0.3f)
-            {
-                Instantiate(timburrPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Timburr generado en " + spawnPos);
-            }
-            else if (conkeldurrPrefab != null && Random.value < 0.8f)
-            {
-                Instantiate(conkeldurrPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Conkeldurr generado en " + spawnPos);
-            }
-            else if (slowpokePrefab != null && Random.value < 0.1f)
-            {
-                Instantiate(slowpokePrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Power-Up Slowpoke generado");
-            }
-            else if (emberPrefab != null && Random.value < 0.3f)
-            {
-                Instantiate(emberPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Ember generado en " + spawnPos);
-            }
-            else if (extraBallPrefab != null && Random.value < 0.3f)
-            {
-                Instantiate(extraBallPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("BallExtra generado en " + spawnPos);
-            }
-            else if (telekinesisPrefab != null && Random.value < 0.3f)
-            {
-                Instantiate(telekinesisPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Telequinesis generado en " + spawnPos);
-            }
-            else if (powerBallPrefab != null && Random.value < 0.3f)
-            {
-                Instantiate(powerBallPrefab, spawnPos, Quaternion.identity);
-                Debug.Log("Haunter generado en " + spawnPos);
-            }
-            else if (powerBallActive && normalBallPrefab != null && Random.value < 0.9)
-            {
-                Instantiate(normalBallPrefab, spawnPos, Quaternion.identity);
-            }
+
 
             Vector3 refl;
 
@@ -411,7 +407,7 @@ public class BallController : MonoBehaviour
             Destroy(rightChar);
             shooterActive = false;
         }
-        
+
         shooterActive = true;
 
         // Calcula mitad de ancho de la paleta
@@ -433,37 +429,102 @@ public class BallController : MonoBehaviour
         StartCoroutine(ShooterCoroutine());
     }
 
-    
+
     private IEnumerator SlowCoroutine()
-{
-    slowActive = true;
-    // Guardas la velocidad original de la bola
-    float origSpeed = speed;
-    speed *= slowFactor;
+    {
+        slowActive = true;
+        // Guardas la velocidad original de la bola
+        float origSpeed = speed;
+        speed *= slowFactor;
 
-    // (Opcional) ralentiza todo el juego
-    Time.timeScale = 0.7f;
+        // (Opcional) ralentiza todo el juego
+        Time.timeScale = 0.7f;
 
-    yield return new WaitForSecondsRealtime(slowDuration);
+        yield return new WaitForSecondsRealtime(slowDuration);
 
-    // Vuelves a normal
-    speed = origSpeed;
-    Time.timeScale = 1f;
-    slowActive = false;
-}
+        // Vuelves a normal
+        speed = origSpeed;
+        Time.timeScale = 1f;
+        slowActive = false;
+    }
 
     public void ActivateSlow()
     {
-            if (!slowActive)
-    {
-        StartCoroutine(SlowCoroutine());
+        if (!slowActive)
+        {
+            StartCoroutine(SlowCoroutine());
+        }
+        else
+        {
+            // Si ya está activo, reinicia la duración:
+            StopCoroutine("SlowCoroutine");
+            StartCoroutine(SlowCoroutine());
+        }
     }
-    else
+    
+    private void GenerarPowerUpPonderado(Vector3 spawnPos)
     {
-        // Si ya está activo, reinicia la duración:
-        StopCoroutine("SlowCoroutine");
-        StartCoroutine(SlowCoroutine());
-    }
+        // 1) Crear un diccionario dinámico que incluya solo los power-ups válidos ahora
+        Dictionary<GameObject, float> candidates = new Dictionary<GameObject, float>(powerUpWeights);
+
+        // Si powerBallActive = true, ENABLE normalBallPrefab con peso alto; si no, lo excluimos.
+        if (powerBallActive && normalBallPrefab != null)
+        {
+            // Peso alto (ej. 90) para que salga muy a menudo
+            candidates.Add(normalBallPrefab, 90f);
+        }
+
+        // 2) Eliminar cualquier entrada cuyo prefab sea null (no asignado)
+        List<GameObject> toRemove = new List<GameObject>();
+        foreach (var kv in candidates)
+        {
+            if (kv.Key == null)
+                toRemove.Add(kv.Key);
+        }
+        foreach (var key in toRemove)
+            candidates.Remove(key);
+
+        // 3) Sumar todos los pesos
+        float totalWeight = 0f;
+        foreach (var kv in candidates)
+            totalWeight += kv.Value;
+
+        if (totalWeight <= 0f)
+        {
+            Debug.LogWarning("GenerarPowerUpPonderado: no hay power-ups válidos (suma de pesos = 0).");
+            return;
+        }
+
+        // 4) Elegir un valor aleatorio entre 0 y totalWeight
+        float r = Random.Range(0f, totalWeight);
+
+        // 5) Recorrer acumulando hasta que r ≤ acumulado
+        float acum = 0f;
+        foreach (var kv in candidates)
+        {
+            GameObject prefab = kv.Key;
+            float weight = kv.Value;
+
+            acum += weight;
+                Quaternion rotacionAUsar = Quaternion.identity;
+
+            if (prefab == magnetPrefab)
+            {
+                // El ejemplo que tenías antes:
+                rotacionAUsar = Quaternion.Euler(-90f, 0f, 0f);
+            }
+            else if (prefab == timburrPrefab)
+            {
+            rotacionAUsar = Quaternion.Euler(0f, 90f, 0f);
+        }
+            if (r <= acum)
+            {
+                // Instanciamos este prefab
+                Instantiate(prefab, spawnPos, rotacionAUsar);
+                Debug.Log($"Power-Up generado (ponderado): {prefab.name}");
+                return;
+            }
+        }
     }
 
 
