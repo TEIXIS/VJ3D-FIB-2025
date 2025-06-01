@@ -63,6 +63,7 @@ public class BallController : MonoBehaviour
     public GameObject conkeldurrPrefab;
 
     public AudioClip breakSound;
+    public AudioClip grassSound;
     public AudioClip bounceSound;
 
     public GameObject breakParticlesPrefab; 
@@ -356,6 +357,20 @@ public class BallController : MonoBehaviour
         if (col.gameObject.CompareTag("Grass"))
         {
             //Ignora colisiones
+            if (breakParticlesPrefab != null)
+            {
+                GameObject psGO = Instantiate(breakParticlesPrefab, col.transform.position, Quaternion.identity);
+                ParticleSystem ps = psGO.GetComponent<ParticleSystem>();
+
+                Renderer rend = col.gameObject.GetComponentInChildren<Renderer>();
+                if (rend != null)
+                {
+                    Color blockColor = rend.material.color;
+                    var main = ps.main;
+                    main.startColor = blockColor;
+                }
+            }
+
             LevelManager lm = FindObjectOfType<LevelManager>();
             if (lm != null)
             {
@@ -369,7 +384,7 @@ public class BallController : MonoBehaviour
             Vector3 incoming = rb.linearVelocity;
             Vector3 dirClamped = ClampDirection(incoming);
             rb.linearVelocity = dirClamped * speed;
-            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+            AudioSource.PlayClipAtPoint(grassSound, transform.position);
             return;
          }
 
