@@ -21,7 +21,31 @@ public class Projectile : MonoBehaviour
         if (col.gameObject.CompareTag("cub"))
         {
             Destroy(col.gameObject);  // destruye el bloque
-            Destroy(gameObject);      // destruye el proyectil
+            Destroy(gameObject);
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            bool spawnedNext = false;
+            if (lm != null)
+            {
+                spawnedNext = lm.BlockDestroyed(col.transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("BallController: no se encontró LevelManager.");
+            }      // destruye el proyectil
+        }
+        else if (col.gameObject.CompareTag("Grass"))
+        {
+            Destroy(col.gameObject);
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            bool spawnedNext = false;
+            if (lm != null)
+            {
+                spawnedNext = lm.BlockDestroyed(col.transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("BallController: no se encontró LevelManager.");
+            }
         }
         else if (!col.gameObject.CompareTag("Paddle"))
         {

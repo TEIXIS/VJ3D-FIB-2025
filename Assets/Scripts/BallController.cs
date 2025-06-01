@@ -65,6 +65,9 @@ public class BallController : MonoBehaviour
     public AudioClip breakSound;
     public AudioClip bounceSound;
 
+    public GameObject breakParticlesPrefab; 
+
+
     private AudioSource audioSource;
 
     // Ejemplo de pesos, ajústalos a tu gusto
@@ -265,6 +268,20 @@ public class BallController : MonoBehaviour
 
 
             Object.FindAnyObjectByType<ScoreManager>()?.AddPoints(100);
+
+            if (breakParticlesPrefab != null)
+            {
+                GameObject psGO = Instantiate(breakParticlesPrefab, col.transform.position, Quaternion.identity);
+                ParticleSystem ps = psGO.GetComponent<ParticleSystem>();
+
+                Renderer rend = col.gameObject.GetComponentInChildren<Renderer>();
+                if (rend != null)
+                {
+                    Color blockColor = rend.material.color;
+                    var main = ps.main;
+                    main.startColor = blockColor;
+                }
+            }
 
 
             Vector3 spawnPos = col.transform.position;
