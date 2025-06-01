@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,20 +14,19 @@ public class ScoreManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         highScore = PlayerPrefs.GetInt("HighScore", 0);
-        UpdateUI();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
 
     public void AddPoints(int amount)
     {
@@ -55,4 +55,14 @@ public class ScoreManager : MonoBehaviour
         if (highScoreText != null)
             highScoreText.text = "HighScore: " + highScore;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+{
+    if (scene.name == "menu")
+    {
+        ResetScore(); // ← aquí reinicia puntos al volver al menú
+        UpdateUI();   // ← opcional, para refrescar el texto
+    }
+}
+
 }
