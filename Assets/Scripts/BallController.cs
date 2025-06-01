@@ -98,14 +98,14 @@ public class BallController : MonoBehaviour
         // Inicializamos el diccionario de pesos una sola vez
         powerUpWeights = new Dictionary<GameObject, float>()
         {
-            { magnetPrefab,        10f },
-            { timburrPrefab,        7f },
-            { conkeldurrPrefab,     7f },
-            { slowpokePrefab,       8f },
-            { emberPrefab,          5f },
-            { extraBallPrefab,     12f },
-            { telekinesisPrefab,    4f },
-            { powerBallPrefab,      3f }
+            { magnetPrefab,        7f },
+            { timburrPrefab,        4f },
+            { conkeldurrPrefab,     4f },
+            { slowpokePrefab,       3f },
+            { emberPrefab,          3f },
+            { extraBallPrefab,     5f },
+            { telekinesisPrefab,    3f },
+            { powerBallPrefab,      4f }
         };
     }
 
@@ -207,7 +207,7 @@ public class BallController : MonoBehaviour
         if (attractionActive && v.z > 0f && paddle != null)
         {
             // 2.a) Calcula extents de la paleta
-            var col = paddle.GetComponent<Collider>();
+            var col = paddle.GetComponentInChildren<Collider>();
             float halfW = col.bounds.extents.x;
 
             // 2.b) Distancia horizontal
@@ -329,7 +329,7 @@ public class BallController : MonoBehaviour
             // 2) Solo si NO se generó el next-level, hacemos el spawn aleatorio de power-ups normales:
             if (!spawnedNext)
             {
-                if (Random.value < 0.2) GenerarPowerUpPonderado(spawnPos);
+                if (Random.value < 0.4) GenerarPowerUpPonderado(spawnPos);
             }
             // Probabilidad de soltar imán (ej. 30%)
 
@@ -353,6 +353,25 @@ public class BallController : MonoBehaviour
 
             return;
         }
+        if (col.gameObject.CompareTag("Grass"))
+        {
+            //Ignora colisiones
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            if (lm != null)
+            {
+                lm.BlockDestroyed(col.transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("BallController: no se encontró LevelManager.");
+            }
+            Destroy(col.gameObject);
+            Vector3 incoming = rb.linearVelocity;
+            Vector3 dirClamped = ClampDirection(incoming);
+            rb.linearVelocity = dirClamped * speed;
+            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+            return;
+         }
 
         // Otras colisiones
         ContactPoint cp2 = col.GetContact(0);
@@ -462,7 +481,10 @@ public class BallController : MonoBehaviour
         shooterActive = true;
 
         // Calcula mitad de ancho de la paleta
-        Collider col = paddle.GetComponent<Collider>();
+        //Busco collider en hijos de la paddle
+
+
+        Collider col = paddle.GetComponentInChildren<Collider>();
         float halfW = col.bounds.extents.x;
 
         // Posiciones relativas a la paleta
@@ -570,6 +592,7 @@ public class BallController : MonoBehaviour
         }
             if (r <= acum)
             {
+                spawnPos.y = 10.5f;
                 // Instanciamos este prefab
                 Instantiate(prefab, spawnPos, rotacionAUsar);
                 Debug.Log($"Power-Up generado (ponderado): {prefab.name}");

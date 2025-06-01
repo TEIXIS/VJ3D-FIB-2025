@@ -17,7 +17,8 @@ public class LevelManager : MonoBehaviour
     {
         // Contamos cuántos bloques hay al inicio:
         GameObject[] bloques = GameObject.FindGameObjectsWithTag("cub");
-        totalBlocks = bloques.Length;
+        GameObject[] grasses = GameObject.FindGameObjectsWithTag("Grass");
+        totalBlocks = bloques.Length + grasses.Length;
         destroyedBlocks = 0;
         powerUpSpawned = false;
         if (totalBlocks == 0)
