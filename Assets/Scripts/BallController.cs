@@ -67,6 +67,7 @@ public class BallController : MonoBehaviour
 
     public GameObject breakParticlesPrefab; 
 
+    public static Vector3 InitialSpawnPosition;
 
     private AudioSource audioSource;
 
@@ -127,12 +128,29 @@ public class BallController : MonoBehaviour
         lastPaddlePos = paddle.transform.position;
 
         audioSource = GetComponent<AudioSource>();
+
+        if (InitialSpawnPosition == Vector3.zero)
+            InitialSpawnPosition = transform.position;
+
     }
 
     void Update()
     {
-        if (!GameState.allowInput) 
-            return;
+        // Si estamos esperando lanzamiento después de perder vida
+        if (LivesManager.Instance != null &&
+            LivesManager.Instance.waitingForLaunch &&
+            !launched)
+        {
+            // Fija la bola en la posición de spawn hasta que se pulse Espacio
+            transform.position = InitialSpawnPosition;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                LivesManager.Instance.waitingForLaunch = false;
+                LaunchInInitialDirection();
+            }
+            return; // No procesar nada más hasta que se lance
+        }
 
 
         // Si bola está pegada por imán, sigue a la paleta y espera Space
@@ -166,6 +184,15 @@ public class BallController : MonoBehaviour
             paddleControlActive = !paddleControlActive;
             Debug.Log("Control de paleta " + (paddleControlActive ? "activado" : "desactivado"));
         }
+
+        // --- COMPROBAR SI SE HA PERDIDO LA BOLA ---
+        float outZ = paddle.transform.position.z + 1.0f;  // Ajusta margen si lo necesitas
+        if (transform.position.z > outZ)  // Sale por detrás de la paleta
+        {
+            if (LivesManager.Instance != null)
+                LivesManager.Instance.OnBallLost(this);
+        }
+
     }
 
     void FixedUpdate()
