@@ -2353,6 +2353,10 @@ PrefabInstance:
       propertyPath: attractionStrength
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 5311800494547256125, guid: 92e89502ac3b89f4c96b3da1728fa4e6, type: 3}
+      propertyPath: breakParticlesPrefab
+      value: 
+      objectReference: {fileID: 5686459682086512565, guid: 123fb54b011ec9241b918e022708d0c4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
