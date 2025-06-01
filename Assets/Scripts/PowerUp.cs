@@ -50,7 +50,7 @@ public class PowerUp : MonoBehaviour
                     Debug.Log("PowerUp: Magnet aplicado a la bola.");
                     break;
                 case PowerUpType.ExtraBall:
-                    ball.SpawnExtraBalls(1);
+                    ball.SpawnExtraBalls(2);
                     Debug.Log("PowerUp: Magnet aplicado a la bola.");
                     break;
                 case PowerUpType.PowerBall:
