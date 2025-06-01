@@ -5580,7 +5580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfda5a8e618499049bc0e37821a9bd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backWall: {fileID: 178220778}
+  backWall: {fileID: 0}
 --- !u!114 &1021081372
 MonoBehaviour:
   m_ObjectHideFlags: 0

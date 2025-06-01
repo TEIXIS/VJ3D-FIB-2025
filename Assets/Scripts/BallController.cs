@@ -251,6 +251,7 @@ public class BallController : MonoBehaviour
             return;
         }
 
+
         // Colisión con cubo
         if (col.gameObject.CompareTag("cub"))
         {
@@ -282,7 +283,7 @@ public class BallController : MonoBehaviour
             // 2) Solo si NO se generó el next-level, hacemos el spawn aleatorio de power-ups normales:
             if (!spawnedNext)
             {
-                if(Random.value < 0.2) GenerarPowerUpPonderado(spawnPos);
+                if (Random.value < 0.2) GenerarPowerUpPonderado(spawnPos);
             }
             // Probabilidad de soltar imán (ej. 30%)
 
@@ -316,6 +317,10 @@ public class BallController : MonoBehaviour
             Vector3 refl2 = Vector3.Reflect(in2, norm2);
             Vector3 dir2 = ClampDirection(refl2);
             rb.linearVelocity = dir2 * speed;
+        }
+        if (col.gameObject.CompareTag("Wall"))
+        {
+            AudioSource.PlayClipAtPoint(bounceSound, transform.position);
         }
     }
 
