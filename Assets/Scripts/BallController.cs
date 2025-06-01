@@ -269,9 +269,18 @@ public class BallController : MonoBehaviour
 
             if (breakParticlesPrefab != null)
             {
-                Instantiate(breakParticlesPrefab, col.transform.position, Quaternion.identity);
-                Debug.Log("Partículas de destrucción generadas");
+                GameObject psGO = Instantiate(breakParticlesPrefab, col.transform.position, Quaternion.identity);
+                ParticleSystem ps = psGO.GetComponent<ParticleSystem>();
+
+                Renderer rend = col.gameObject.GetComponentInChildren<Renderer>();
+                if (rend != null)
+                {
+                    Color blockColor = rend.material.color;
+                    var main = ps.main;
+                    main.startColor = blockColor;
+                }
             }
+
 
             Vector3 spawnPos = col.transform.position;
             Destroy(col.gameObject);
