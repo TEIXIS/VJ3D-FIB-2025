@@ -175,7 +175,7 @@ public class BallController : MonoBehaviour
             powerBallActive = !powerBallActive;
             Debug.Log("Power Ball " + (powerBallActive ? "activado" : "desactivado"));
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             SpawnExtraBalls(2);
         }
