@@ -10,7 +10,7 @@ public class NextLevelPowerUp : MonoBehaviour
     void Update()
     {
         // Mueve el GameObject en +Z a velocidad constante
-        transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
+        if(transform.position.z <= -2.674) transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
     }
     private void OnTriggerEnter(Collider other)
     {

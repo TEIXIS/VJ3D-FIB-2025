@@ -98,7 +98,7 @@ public class BallController : MonoBehaviour
             { timburrPrefab,        7f },
             { conkeldurrPrefab,     7f },
             { slowpokePrefab,       8f },
-            { emberPrefab,          5f },
+            { emberPrefab,          70f },
             { extraBallPrefab,     12f },
             { telekinesisPrefab,    4f },
             { powerBallPrefab,      3f }
@@ -128,6 +128,8 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
+        if (!GameState.allowInput) 
+            return;
 
 
         // Si bola está pegada por imán, sigue a la paleta y espera Space
@@ -283,7 +285,7 @@ public class BallController : MonoBehaviour
             // 2) Solo si NO se generó el next-level, hacemos el spawn aleatorio de power-ups normales:
             if (!spawnedNext)
             {
-                if (Random.value < 0.2) GenerarPowerUpPonderado(spawnPos);
+                if (Random.value < 0.4) GenerarPowerUpPonderado(spawnPos);
             }
             // Probabilidad de soltar imán (ej. 30%)
 
@@ -307,6 +309,25 @@ public class BallController : MonoBehaviour
 
             return;
         }
+        if (col.gameObject.CompareTag("Grass"))
+        {
+            //Ignora colisiones
+            LevelManager lm = FindObjectOfType<LevelManager>();
+            if (lm != null)
+            {
+                lm.BlockDestroyed(col.transform.position);
+            }
+            else
+            {
+                Debug.LogWarning("BallController: no se encontró LevelManager.");
+            }
+            Destroy(col.gameObject);
+            Vector3 incoming = rb.linearVelocity;
+            Vector3 dirClamped = ClampDirection(incoming);
+            rb.linearVelocity = dirClamped * speed;
+            AudioSource.PlayClipAtPoint(breakSound, transform.position);
+            return;
+         }
 
         // Otras colisiones
         ContactPoint cp2 = col.GetContact(0);
@@ -416,7 +437,10 @@ public class BallController : MonoBehaviour
         shooterActive = true;
 
         // Calcula mitad de ancho de la paleta
-        Collider col = paddle.GetComponent<Collider>();
+        //Busco collider en hijos de la paddle
+
+
+        Collider col = paddle.GetComponentInChildren<Collider>();
         float halfW = col.bounds.extents.x;
 
         // Posiciones relativas a la paleta

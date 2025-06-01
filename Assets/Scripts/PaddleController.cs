@@ -24,7 +24,8 @@ public class PaddleController : MonoBehaviour
                 Debug.LogWarning("PaddleController: no se encontró ningún Animator en los hijos.");
             }
         }
-
+        if (!GameState.allowInput) 
+            return;
         // Ahora movemos la paleta normalmente...
 
 

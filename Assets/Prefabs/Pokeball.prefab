@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2740f7c2a2a6d1c4ab7d3c217bd5a12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 8
   ballPrefab: {fileID: 284024745118062512}
   magnetPrefab: {fileID: 6771291604981512680, guid: 38ff1ae31aae49e42b88ba9b9148be15, type: 3}
   extraBallPrefab: {fileID: 4175535797371517778, guid: c98955a36e1d0974c8b3260cad16070f, type: 3}

@@ -12,6 +12,7 @@ TagManager:
   - PowerUpExtraBall
   - PowerUpPowerBall
   - BackWall
+  - Grass
   layers:
   - Default
   - TransparentFX
